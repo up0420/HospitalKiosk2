@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir:*)",
+      "Bash(msbuild:*)",
+      "Bash(dotnet build:*)",
+      "Bash(nuget restore:*)",
+      "Bash(where:*)",
+      "Bash(\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\MSBuild.exe\" HospitalKiosk.sln /t:Build /p:Configuration=Debug /v:minimal)",
+      "Bash(\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\MSBuild.exe\" HospitalKiosk.sln //t:Build //p:Configuration=Debug //v:minimal)",
+      "Bash(sc query MSSQLSERVER)",
+      "Bash(sc query:*)",
+      "Bash(net start)",
+      "Bash(sqlcmd:*)",
+      "Bash(\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\MSBuild.exe\" HospitalKiosk.sln //t:Rebuild //p:Configuration=Debug //v:minimal)",
+      "Bash(net start SQLBrowser)",
+      "Bash(\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\MSBuild.exe\" HospitalKiosk.sln //t:Restore //v:minimal)",
+      "Bash(\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\MSBuild.exe\" F:projectHospitalKioskHospitalKiosk.sln /t:Rebuild /p:Configuration=Debug /v:minimal)",
+      "Bash(taskkill:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
