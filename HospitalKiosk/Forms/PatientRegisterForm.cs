@@ -67,5 +67,15 @@ namespace HospitalKiosk.Forms
         {
             this.Close();
         }
+
+        private void TxtPhone_Enter(object sender, EventArgs e)
+        {
+            numericKeypad.TargetTextBox = txtPhone;
+        }
+
+        private void TxtEmergencyContact_Enter(object sender, EventArgs e)
+        {
+            numericKeypad.TargetTextBox = txtEmergencyContact;
+        }
     }
 }

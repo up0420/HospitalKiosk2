@@ -155,6 +155,9 @@ namespace HospitalKiosk.Forms
                            detail.Appointment.AppointmentDateTime > DateTime.Now;
 
             btnCancelAppointment.Enabled = canCancel;
+
+            // 예약 상세가 보이도록 스크롤
+            this.ScrollControlIntoView(grpAppointmentDetails);
         }
 
         private void ClearAppointmentDetails()
@@ -207,6 +210,11 @@ namespace HospitalKiosk.Forms
                 e.Handled = true;
                 BtnSearchPatient_Click(sender, e);
             }
+        }
+
+        private void TxtPatientSearch_Enter(object sender, EventArgs e)
+        {
+            numericKeypad.TargetTextBox = txtPatientSearch;
         }
     }
 }

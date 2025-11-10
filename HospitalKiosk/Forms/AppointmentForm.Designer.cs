@@ -20,6 +20,7 @@ namespace HospitalKiosk.Forms
         private System.Windows.Forms.TextBox txtReason;
         private System.Windows.Forms.Button btnConfirm;
         private System.Windows.Forms.Button btnCancel;
+        private HospitalKiosk.Controls.NumericKeypadControl numericKeypad;
 
         protected override void Dispose(bool disposing)
         {
@@ -49,6 +50,7 @@ namespace HospitalKiosk.Forms
             this.txtReason = new System.Windows.Forms.TextBox();
             this.btnConfirm = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.numericKeypad = new HospitalKiosk.Controls.NumericKeypadControl();
             this.SuspendLayout();
             //
             // lblTitle
@@ -75,8 +77,10 @@ namespace HospitalKiosk.Forms
             this.txtPatientSearch.Font = new System.Drawing.Font("맑은 고딕", 11F);
             this.txtPatientSearch.Location = new System.Drawing.Point(180, 70);
             this.txtPatientSearch.Name = "txtPatientSearch";
+            this.txtPatientSearch.ReadOnly = true;
             this.txtPatientSearch.Size = new System.Drawing.Size(300, 27);
             this.txtPatientSearch.TabIndex = 2;
+            this.txtPatientSearch.Enter += new System.EventHandler(this.TxtPatientSearch_Enter);
             //
             // btnSearchPatient
             //
@@ -232,11 +236,21 @@ namespace HospitalKiosk.Forms
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             //
+            // numericKeypad
+            //
+            this.numericKeypad.BackColor = System.Drawing.Color.LightGray;
+            this.numericKeypad.Location = new System.Drawing.Point(900, 80);
+            this.numericKeypad.Name = "numericKeypad";
+            this.numericKeypad.Size = new System.Drawing.Size(324, 440);
+            this.numericKeypad.TabIndex = 17;
+            this.numericKeypad.TargetTextBox = null;
+            //
             // AppointmentForm
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(900, 620);
+            this.ClientSize = new System.Drawing.Size(1280, 900);
+            this.Controls.Add(this.numericKeypad);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnConfirm);
             this.Controls.Add(this.txtReason);

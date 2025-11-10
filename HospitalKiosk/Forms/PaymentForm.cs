@@ -175,5 +175,15 @@ namespace HospitalKiosk.Forms
         {
             this.Close();
         }
+
+        private void TxtPatientSearch_Enter(object sender, EventArgs e)
+        {
+            numericKeypad.TargetTextBox = txtPatientSearch;
+        }
+
+        private void TxtAmount_Enter(object sender, EventArgs e)
+        {
+            numericKeypad.TargetTextBox = txtAmount;
+        }
     }
 }

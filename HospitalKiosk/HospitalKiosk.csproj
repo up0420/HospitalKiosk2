@@ -123,6 +123,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\NumericKeypadControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\NumericKeypadControl.Designer.cs">
+      <DependentUpon>NumericKeypadControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\AppointmentForm.cs">
       <SubType>Form</SubType>
     </Compile>

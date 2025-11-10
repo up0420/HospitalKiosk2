@@ -18,6 +18,7 @@ namespace HospitalKiosk.Forms
         private System.Windows.Forms.ComboBox cmbPaymentMethod;
         private System.Windows.Forms.Button btnPay;
         private System.Windows.Forms.Button btnCancel;
+        private HospitalKiosk.Controls.NumericKeypadControl numericKeypad;
 
         protected override void Dispose(bool disposing)
         {
@@ -45,6 +46,7 @@ namespace HospitalKiosk.Forms
             this.cmbPaymentMethod = new System.Windows.Forms.ComboBox();
             this.btnPay = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.numericKeypad = new HospitalKiosk.Controls.NumericKeypadControl();
             this.SuspendLayout();
             //
             // lblTitle
@@ -71,8 +73,10 @@ namespace HospitalKiosk.Forms
             this.txtPatientSearch.Font = new System.Drawing.Font("맑은 고딕", 11F);
             this.txtPatientSearch.Location = new System.Drawing.Point(180, 70);
             this.txtPatientSearch.Name = "txtPatientSearch";
+            this.txtPatientSearch.ReadOnly = true;
             this.txtPatientSearch.Size = new System.Drawing.Size(300, 27);
             this.txtPatientSearch.TabIndex = 2;
+            this.txtPatientSearch.Enter += new System.EventHandler(this.TxtPatientSearch_Enter);
             //
             // btnSearchPatient
             //
@@ -152,12 +156,13 @@ namespace HospitalKiosk.Forms
             //
             // txtAmount
             //
-            this.txtAmount.Enabled = false;
             this.txtAmount.Font = new System.Drawing.Font("맑은 고딕", 12F);
             this.txtAmount.Location = new System.Drawing.Point(180, 410);
             this.txtAmount.Name = "txtAmount";
+            this.txtAmount.ReadOnly = true;
             this.txtAmount.Size = new System.Drawing.Size(200, 29);
             this.txtAmount.TabIndex = 10;
+            this.txtAmount.Enter += new System.EventHandler(this.TxtAmount_Enter);
             //
             // lblPaymentMethodLabel
             //
@@ -210,11 +215,21 @@ namespace HospitalKiosk.Forms
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             //
+            // numericKeypad
+            //
+            this.numericKeypad.BackColor = System.Drawing.Color.LightGray;
+            this.numericKeypad.Location = new System.Drawing.Point(820, 80);
+            this.numericKeypad.Name = "numericKeypad";
+            this.numericKeypad.Size = new System.Drawing.Size(324, 440);
+            this.numericKeypad.TabIndex = 15;
+            this.numericKeypad.TargetTextBox = null;
+            //
             // PaymentForm
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 590);
+            this.ClientSize = new System.Drawing.Size(1200, 800);
+            this.Controls.Add(this.numericKeypad);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnPay);
             this.Controls.Add(this.cmbPaymentMethod);

@@ -20,6 +20,7 @@ namespace HospitalKiosk.Forms
         private System.Windows.Forms.TextBox txtEmergencyContact;
         private System.Windows.Forms.Button btnRegister;
         private System.Windows.Forms.Button btnCancel;
+        private HospitalKiosk.Controls.NumericKeypadControl numericKeypad;
 
         protected override void Dispose(bool disposing)
         {
@@ -49,6 +50,7 @@ namespace HospitalKiosk.Forms
             this.txtEmergencyContact = new System.Windows.Forms.TextBox();
             this.btnRegister = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.numericKeypad = new HospitalKiosk.Controls.NumericKeypadControl();
             this.pnlGender.SuspendLayout();
             this.SuspendLayout();
             //
@@ -158,8 +160,10 @@ namespace HospitalKiosk.Forms
             this.txtPhone.Font = new System.Drawing.Font("맑은 고딕", 12F);
             this.txtPhone.Location = new System.Drawing.Point(160, 230);
             this.txtPhone.Name = "txtPhone";
+            this.txtPhone.ReadOnly = true;
             this.txtPhone.Size = new System.Drawing.Size(380, 29);
             this.txtPhone.TabIndex = 8;
+            this.txtPhone.Enter += new System.EventHandler(this.TxtPhone_Enter);
             //
             // lblAddress
             //
@@ -194,8 +198,10 @@ namespace HospitalKiosk.Forms
             this.txtEmergencyContact.Font = new System.Drawing.Font("맑은 고딕", 12F);
             this.txtEmergencyContact.Location = new System.Drawing.Point(160, 330);
             this.txtEmergencyContact.Name = "txtEmergencyContact";
+            this.txtEmergencyContact.ReadOnly = true;
             this.txtEmergencyContact.Size = new System.Drawing.Size(380, 29);
             this.txtEmergencyContact.TabIndex = 12;
+            this.txtEmergencyContact.Enter += new System.EventHandler(this.TxtEmergencyContact_Enter);
             //
             // btnRegister
             //
@@ -225,11 +231,21 @@ namespace HospitalKiosk.Forms
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             //
+            // numericKeypad
+            //
+            this.numericKeypad.BackColor = System.Drawing.Color.LightGray;
+            this.numericKeypad.Location = new System.Drawing.Point(720, 100);
+            this.numericKeypad.Name = "numericKeypad";
+            this.numericKeypad.Size = new System.Drawing.Size(324, 440);
+            this.numericKeypad.TabIndex = 15;
+            this.numericKeypad.TargetTextBox = null;
+            //
             // PatientRegisterForm
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(600, 480);
+            this.ClientSize = new System.Drawing.Size(1100, 700);
+            this.Controls.Add(this.numericKeypad);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnRegister);
             this.Controls.Add(this.txtEmergencyContact);

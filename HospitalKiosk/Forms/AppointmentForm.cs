@@ -221,5 +221,10 @@ namespace HospitalKiosk.Forms
         {
             this.Close();
         }
+
+        private void TxtPatientSearch_Enter(object sender, EventArgs e)
+        {
+            numericKeypad.TargetTextBox = txtPatientSearch;
+        }
     }
 }
