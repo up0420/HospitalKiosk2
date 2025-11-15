@@ -38,6 +38,9 @@ namespace DoctorScheduleApp.Forms
             this.cmbScheduleType = new System.Windows.Forms.ComboBox();
             this.lblNotes = new System.Windows.Forms.Label();
             this.txtNotes = new System.Windows.Forms.TextBox();
+            this.chkRecurring = new System.Windows.Forms.CheckBox();
+            this.lblRecurringDays = new System.Windows.Forms.Label();
+            this.clbDaysOfWeek = new System.Windows.Forms.CheckedListBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.panelMain = new System.Windows.Forms.Panel();
@@ -142,8 +145,51 @@ namespace DoctorScheduleApp.Forms
             this.txtNotes.Multiline = true;
             this.txtNotes.Name = "txtNotes";
             this.txtNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtNotes.Size = new System.Drawing.Size(250, 80);
+            this.txtNotes.Size = new System.Drawing.Size(250, 60);
             this.txtNotes.TabIndex = 4;
+            //
+            // chkRecurring
+            //
+            this.chkRecurring.AutoSize = true;
+            this.chkRecurring.Font = new System.Drawing.Font("맑은 고딕", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.chkRecurring.Location = new System.Drawing.Point(150, 260);
+            this.chkRecurring.Name = "chkRecurring";
+            this.chkRecurring.Size = new System.Drawing.Size(122, 23);
+            this.chkRecurring.TabIndex = 5;
+            this.chkRecurring.Text = "반복 일정 설정";
+            this.chkRecurring.UseVisualStyleBackColor = true;
+            this.chkRecurring.CheckedChanged += new System.EventHandler(this.ChkRecurring_CheckedChanged);
+            //
+            // lblRecurringDays
+            //
+            this.lblRecurringDays.AutoSize = true;
+            this.lblRecurringDays.Font = new System.Drawing.Font("맑은 고딕", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lblRecurringDays.Location = new System.Drawing.Point(30, 295);
+            this.lblRecurringDays.Name = "lblRecurringDays";
+            this.lblRecurringDays.Size = new System.Drawing.Size(74, 19);
+            this.lblRecurringDays.TabIndex = 10;
+            this.lblRecurringDays.Text = "반복 요일:";
+            this.lblRecurringDays.Visible = false;
+            //
+            // clbDaysOfWeek
+            //
+            this.clbDaysOfWeek.CheckOnClick = true;
+            this.clbDaysOfWeek.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.clbDaysOfWeek.FormattingEnabled = true;
+            this.clbDaysOfWeek.Items.AddRange(new object[] {
+            "일요일",
+            "월요일",
+            "화요일",
+            "수요일",
+            "목요일",
+            "금요일",
+            "토요일"});
+            this.clbDaysOfWeek.Location = new System.Drawing.Point(150, 295);
+            this.clbDaysOfWeek.MultiColumn = true;
+            this.clbDaysOfWeek.Name = "clbDaysOfWeek";
+            this.clbDaysOfWeek.Size = new System.Drawing.Size(250, 40);
+            this.clbDaysOfWeek.TabIndex = 6;
+            this.clbDaysOfWeek.Visible = false;
             //
             // btnSave
             //
@@ -151,10 +197,10 @@ namespace DoctorScheduleApp.Forms
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.Font = new System.Drawing.Font("맑은 고딕", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnSave.ForeColor = System.Drawing.Color.White;
-            this.btnSave.Location = new System.Drawing.Point(150, 290);
+            this.btnSave.Location = new System.Drawing.Point(150, 355);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(120, 40);
-            this.btnSave.TabIndex = 5;
+            this.btnSave.TabIndex = 7;
             this.btnSave.Text = "저장";
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
@@ -165,10 +211,10 @@ namespace DoctorScheduleApp.Forms
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancel.Font = new System.Drawing.Font("맑은 고딕", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.Location = new System.Drawing.Point(280, 290);
+            this.btnCancel.Location = new System.Drawing.Point(280, 355);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(120, 40);
-            this.btnCancel.TabIndex = 6;
+            this.btnCancel.TabIndex = 8;
             this.btnCancel.Text = "취소";
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
@@ -188,17 +234,20 @@ namespace DoctorScheduleApp.Forms
             this.panelMain.Controls.Add(this.cmbScheduleType);
             this.panelMain.Controls.Add(this.dtpEndTime);
             this.panelMain.Controls.Add(this.lblScheduleType);
+            this.panelMain.Controls.Add(this.chkRecurring);
+            this.panelMain.Controls.Add(this.lblRecurringDays);
+            this.panelMain.Controls.Add(this.clbDaysOfWeek);
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMain.Location = new System.Drawing.Point(0, 0);
             this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(450, 360);
+            this.panelMain.Size = new System.Drawing.Size(450, 420);
             this.panelMain.TabIndex = 12;
             //
             // MyScheduleEditForm
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(450, 360);
+            this.ClientSize = new System.Drawing.Size(450, 420);
             this.Controls.Add(this.panelMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -225,6 +274,9 @@ namespace DoctorScheduleApp.Forms
         private System.Windows.Forms.ComboBox cmbScheduleType;
         private System.Windows.Forms.Label lblNotes;
         private System.Windows.Forms.TextBox txtNotes;
+        private System.Windows.Forms.CheckBox chkRecurring;
+        private System.Windows.Forms.Label lblRecurringDays;
+        private System.Windows.Forms.CheckedListBox clbDaysOfWeek;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Panel panelMain;

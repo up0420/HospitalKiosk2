@@ -21,7 +21,11 @@
       "Bash(\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\MSBuild.exe\" \"C:\\Users\\User\\HospitalKiosk2\\DoctorScheduleApp\\DoctorScheduleApp.csproj\" //t:Build //p:Configuration=Debug //v:minimal)",
       "Bash(\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\MSBuild.exe\" \"C:\\Users\\User\\HospitalKiosk2\\HospitalKiosk\\HospitalKiosk.csproj\" /t:Build /p:Configuration=Debug /v:minimal)",
       "Bash(\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\MSBuild.exe\" C:UsersUserHospitalKiosk2HospitalKioskHospitalKiosk.csproj /t:Build /p:Configuration=Debug /v:minimal)",
-      "Bash(\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\MSBuild.exe\" \"C:\\Users\\User\\HospitalKiosk2\\HospitalKiosk\\HospitalKiosk.csproj\" //t:Build //p:Configuration=Debug //v:minimal)"
+      "Bash(\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\MSBuild.exe\" \"C:\\Users\\User\\HospitalKiosk2\\HospitalKiosk\\HospitalKiosk.csproj\" //t:Build //p:Configuration=Debug //v:minimal)",
+      "Bash(\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\MSBuild.exe\" \"F:\\project\\HospitalKiosk\\HospitalKiosk.sln\" /t:Build /p:Configuration=Debug /v:minimal)",
+      "Bash(\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\MSBuild.exe\" \"F:\\project\\HospitalKiosk\\HospitalKiosk.sln\" //t:Build //p:Configuration=Debug //v:minimal)",
+      "Bash(cmd //c taskkill //IM DoctorScheduleApp.exe //F)",
+      "Bash(\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\MSBuild.exe\" F:projectHospitalKioskHospitalKiosk.sln //t:Build //p:Configuration=Debug //v:minimal)"
     ],
     "deny": [],
     "ask": []

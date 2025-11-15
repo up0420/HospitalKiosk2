@@ -173,5 +173,102 @@ namespace DoctorScheduleApp.Forms
                 BtnEditSchedule_Click(sender, e);
             }
         }
+
+        private void BtnSetDefaultSchedule_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show(
+                "기본 평일 근무 스케줄(월~금, 9:00-18:00)을 생성하시겠습니까?\n" +
+                "이미 동일한 반복 일정이 있으면 중복될 수 있습니다.",
+                "확인",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                var createResult = _scheduleService.CreateDefaultWeekdaySchedule(_loggedInDoctor.DoctorId);
+
+                if (createResult.Success)
+                {
+                    LoadSchedules();
+                    MessageBox.Show(createResult.Message, "완료",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show(createResult.Message, "오류",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void BtnDeleteMonth_Click(object sender, EventArgs e)
+        {
+            var year = _currentDate.Year;
+            var month = _currentDate.Month;
+
+            var result = MessageBox.Show(
+                $"{year}년 {month}월의 모든 일정을 삭제하시겠습니까?\n" +
+                "이 작업은 되돌릴 수 없습니다.\n\n" +
+                "※ 반복 일정도 함께 삭제됩니다.",
+                "경고",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                var deleteResult = _scheduleService.DeleteSchedulesByMonth(_loggedInDoctor.DoctorId, year, month);
+
+                if (deleteResult.Success)
+                {
+                    LoadSchedules();
+                    MessageBox.Show(deleteResult.Message, "완료",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show(deleteResult.Message, "오류",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void BtnDeleteAll_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show(
+                "모든 일정을 삭제하시겠습니까?\n" +
+                "이 작업은 되돌릴 수 없습니다.\n\n" +
+                "※ 반복 일정을 포함한 모든 일정이 삭제됩니다.",
+                "경고",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                // 한 번 더 확인
+                var confirmResult = MessageBox.Show(
+                    "정말로 모든 일정을 삭제하시겠습니까?\n" +
+                    "이 작업은 되돌릴 수 없습니다!",
+                    "최종 확인",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Exclamation);
+
+                if (confirmResult == DialogResult.Yes)
+                {
+                    var deleteResult = _scheduleService.DeleteAllSchedules(_loggedInDoctor.DoctorId);
+
+                    if (deleteResult.Success)
+                    {
+                        LoadSchedules();
+                        MessageBox.Show(deleteResult.Message, "완료",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show(deleteResult.Message, "오류",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
     }
 }

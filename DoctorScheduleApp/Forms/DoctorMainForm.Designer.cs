@@ -35,6 +35,9 @@ namespace DoctorScheduleApp.Forms
             this.panelLeft = new System.Windows.Forms.Panel();
             this.monthCalendar = new System.Windows.Forms.MonthCalendar();
             this.lblScheduleCount = new System.Windows.Forms.Label();
+            this.btnSetDefaultSchedule = new System.Windows.Forms.Button();
+            this.btnDeleteMonth = new System.Windows.Forms.Button();
+            this.btnDeleteAll = new System.Windows.Forms.Button();
             this.panelMain = new System.Windows.Forms.Panel();
             this.dgvSchedules = new System.Windows.Forms.DataGridView();
             this.colScheduleId = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -110,6 +113,9 @@ namespace DoctorScheduleApp.Forms
             this.panelLeft.BackColor = System.Drawing.Color.White;
             this.panelLeft.Controls.Add(this.monthCalendar);
             this.panelLeft.Controls.Add(this.lblScheduleCount);
+            this.panelLeft.Controls.Add(this.btnSetDefaultSchedule);
+            this.panelLeft.Controls.Add(this.btnDeleteMonth);
+            this.panelLeft.Controls.Add(this.btnDeleteAll);
             this.panelLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelLeft.Location = new System.Drawing.Point(0, 80);
             this.panelLeft.Name = "panelLeft";
@@ -134,6 +140,48 @@ namespace DoctorScheduleApp.Forms
             this.lblScheduleCount.Size = new System.Drawing.Size(127, 20);
             this.lblScheduleCount.TabIndex = 1;
             this.lblScheduleCount.Text = "이번 달 일정: 0건";
+            //
+            // btnSetDefaultSchedule
+            //
+            this.btnSetDefaultSchedule.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(167)))), ((int)(((byte)(69)))));
+            this.btnSetDefaultSchedule.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSetDefaultSchedule.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnSetDefaultSchedule.ForeColor = System.Drawing.Color.White;
+            this.btnSetDefaultSchedule.Location = new System.Drawing.Point(20, 270);
+            this.btnSetDefaultSchedule.Name = "btnSetDefaultSchedule";
+            this.btnSetDefaultSchedule.Size = new System.Drawing.Size(240, 50);
+            this.btnSetDefaultSchedule.TabIndex = 2;
+            this.btnSetDefaultSchedule.Text = "기본 평일 근무\r\n스케줄 생성";
+            this.btnSetDefaultSchedule.UseVisualStyleBackColor = false;
+            this.btnSetDefaultSchedule.Click += new System.EventHandler(this.BtnSetDefaultSchedule_Click);
+            //
+            // btnDeleteMonth
+            //
+            this.btnDeleteMonth.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(193)))), ((int)(((byte)(7)))));
+            this.btnDeleteMonth.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDeleteMonth.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnDeleteMonth.ForeColor = System.Drawing.Color.Black;
+            this.btnDeleteMonth.Location = new System.Drawing.Point(20, 340);
+            this.btnDeleteMonth.Name = "btnDeleteMonth";
+            this.btnDeleteMonth.Size = new System.Drawing.Size(240, 45);
+            this.btnDeleteMonth.TabIndex = 3;
+            this.btnDeleteMonth.Text = "이번 달 일정 전체 삭제";
+            this.btnDeleteMonth.UseVisualStyleBackColor = false;
+            this.btnDeleteMonth.Click += new System.EventHandler(this.BtnDeleteMonth_Click);
+            //
+            // btnDeleteAll
+            //
+            this.btnDeleteAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(53)))), ((int)(((byte)(69)))));
+            this.btnDeleteAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDeleteAll.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnDeleteAll.ForeColor = System.Drawing.Color.White;
+            this.btnDeleteAll.Location = new System.Drawing.Point(20, 395);
+            this.btnDeleteAll.Name = "btnDeleteAll";
+            this.btnDeleteAll.Size = new System.Drawing.Size(240, 45);
+            this.btnDeleteAll.TabIndex = 4;
+            this.btnDeleteAll.Text = "모든 일정 삭제";
+            this.btnDeleteAll.UseVisualStyleBackColor = false;
+            this.btnDeleteAll.Click += new System.EventHandler(this.BtnDeleteAll_Click);
             //
             // panelMain
             //
@@ -328,6 +376,9 @@ namespace DoctorScheduleApp.Forms
         private System.Windows.Forms.Label lblScheduleCount;
         private System.Windows.Forms.Label lblDepartment;
         private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.Button btnSetDefaultSchedule;
+        private System.Windows.Forms.Button btnDeleteMonth;
+        private System.Windows.Forms.Button btnDeleteAll;
         private System.Windows.Forms.DataGridViewTextBoxColumn colScheduleId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn colStartTime;

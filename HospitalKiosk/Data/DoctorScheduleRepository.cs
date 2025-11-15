@@ -54,10 +54,13 @@ namespace HospitalKiosk.Data
         {
             var schedules = new List<DoctorSchedule>();
 
+            // 일반 일정과 모든 반복 일정을 가져옴
             var query = @"SELECT * FROM DoctorSchedules
                          WHERE DoctorId = @DoctorId
-                         AND StartDateTime >= @StartDate
-                         AND EndDateTime <= @EndDate
+                         AND (
+                             IsRecurring = 1
+                             OR (StartDateTime >= @StartDate AND EndDateTime <= @EndDate)
+                         )
                          ORDER BY StartDateTime";
 
             using (var connection = DatabaseHelper.GetConnection())
@@ -84,10 +87,14 @@ namespace HospitalKiosk.Data
         {
             var schedules = new List<DoctorSchedule>();
 
+            // 일반 일정과 반복 일정 모두 가져오기
             var query = @"SELECT * FROM DoctorSchedules
                          WHERE DoctorId = @DoctorId
                          AND ScheduleType = 'Available'
-                         AND CAST(StartDateTime AS DATE) = @Date
+                         AND (
+                             (IsRecurring = 0 AND CAST(StartDateTime AS DATE) = @Date)
+                             OR IsRecurring = 1
+                         )
                          ORDER BY StartDateTime";
 
             using (var connection = DatabaseHelper.GetConnection())
@@ -106,49 +113,153 @@ namespace HospitalKiosk.Data
                 }
             }
 
-            return schedules;
+            // 반복 일정 확장
+            var result = new List<DoctorSchedule>();
+
+            foreach (var schedule in schedules)
+            {
+                if (schedule.IsRecurring)
+                {
+                    // 반복 일정인 경우, 요일 확인
+                    var recurringDays = schedule.GetRecurringDaysOfWeek();
+                    if (recurringDays.Contains(date.DayOfWeek))
+                    {
+                        // 해당 날짜에 맞게 확장
+                        result.Add(new DoctorSchedule
+                        {
+                            ScheduleId = schedule.ScheduleId,
+                            DoctorId = schedule.DoctorId,
+                            ScheduleType = schedule.ScheduleType,
+                            StartDateTime = date.Date.Add(schedule.StartDateTime.TimeOfDay),
+                            EndDateTime = date.Date.Add(schedule.EndDateTime.TimeOfDay),
+                            Title = schedule.Title,
+                            Description = schedule.Description,
+                            IsRecurring = true,
+                            RecurrencePattern = schedule.RecurrencePattern,
+                            CreatedAt = schedule.CreatedAt,
+                            UpdatedAt = schedule.UpdatedAt
+                        });
+                    }
+                }
+                else
+                {
+                    // 일반 일정은 그대로 추가
+                    result.Add(schedule);
+                }
+            }
+
+            return result;
         }
 
         public bool IsDoctorAvailable(int doctorId, DateTime startTime, DateTime endTime)
         {
-            // 근무 시간 확인
-            var workQuery = @"SELECT COUNT(*) FROM DoctorSchedules
+            var targetDate = startTime.Date;
+            var targetDayOfWeek = targetDate.DayOfWeek;
+
+            // 근무 시간 확인 (일반 일정 + 반복 일정)
+            var workQuery = @"SELECT * FROM DoctorSchedules
                              WHERE DoctorId = @DoctorId
                              AND ScheduleType = 'Available'
-                             AND StartDateTime <= @StartTime
-                             AND EndDateTime >= @EndTime";
+                             AND (
+                                 (IsRecurring = 0 AND CAST(StartDateTime AS DATE) = @Date)
+                                 OR IsRecurring = 1
+                             )";
 
-            // 휴가/회의/휴진 확인
-            var blockQuery = @"SELECT COUNT(*) FROM DoctorSchedules
+            // 휴가/회의/휴진 확인 (일반 일정 + 반복 일정)
+            var blockQuery = @"SELECT * FROM DoctorSchedules
                               WHERE DoctorId = @DoctorId
                               AND ScheduleType IN ('Vacation', 'Meeting', 'ClosedDay')
-                              AND StartDateTime < @EndTime
-                              AND EndDateTime > @StartTime";
+                              AND (
+                                  (IsRecurring = 0 AND CAST(StartDateTime AS DATE) = @Date)
+                                  OR IsRecurring = 1
+                              )";
 
             using (var connection = DatabaseHelper.GetConnection())
             {
                 connection.Open();
 
                 // 근무 시간에 포함되는지 확인
+                bool hasWorkSchedule = false;
                 using (var command = new SqlCommand(workQuery, connection))
                 {
                     command.Parameters.AddWithValue("@DoctorId", doctorId);
-                    command.Parameters.AddWithValue("@StartTime", startTime);
-                    command.Parameters.AddWithValue("@EndTime", endTime);
+                    command.Parameters.AddWithValue("@Date", targetDate);
 
-                    var workCount = (int)command.ExecuteScalar();
-                    if (workCount == 0) return false;
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var schedule = MapToSchedule(reader);
+
+                            if (schedule.IsRecurring)
+                            {
+                                // 반복 일정: 요일 확인 후 시간 확장
+                                var recurringDays = schedule.GetRecurringDaysOfWeek();
+                                if (recurringDays.Contains(targetDayOfWeek))
+                                {
+                                    var scheduleStart = targetDate.Add(schedule.StartDateTime.TimeOfDay);
+                                    var scheduleEnd = targetDate.Add(schedule.EndDateTime.TimeOfDay);
+
+                                    if (scheduleStart <= startTime && scheduleEnd >= endTime)
+                                    {
+                                        hasWorkSchedule = true;
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                // 일반 일정
+                                if (schedule.StartDateTime <= startTime && schedule.EndDateTime >= endTime)
+                                {
+                                    hasWorkSchedule = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
                 }
+
+                if (!hasWorkSchedule) return false;
 
                 // 블록된 시간이 있는지 확인
                 using (var command = new SqlCommand(blockQuery, connection))
                 {
                     command.Parameters.AddWithValue("@DoctorId", doctorId);
-                    command.Parameters.AddWithValue("@StartTime", startTime);
-                    command.Parameters.AddWithValue("@EndTime", endTime);
+                    command.Parameters.AddWithValue("@Date", targetDate);
 
-                    var blockCount = (int)command.ExecuteScalar();
-                    if (blockCount > 0) return false;
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var schedule = MapToSchedule(reader);
+
+                            if (schedule.IsRecurring)
+                            {
+                                // 반복 일정: 요일 확인 후 시간 확장
+                                var recurringDays = schedule.GetRecurringDaysOfWeek();
+                                if (recurringDays.Contains(targetDayOfWeek))
+                                {
+                                    var scheduleStart = targetDate.Add(schedule.StartDateTime.TimeOfDay);
+                                    var scheduleEnd = targetDate.Add(schedule.EndDateTime.TimeOfDay);
+
+                                    // 시간이 겹치는지 확인
+                                    if (scheduleStart < endTime && scheduleEnd > startTime)
+                                    {
+                                        return false;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                // 일반 일정
+                                if (schedule.StartDateTime < endTime && schedule.EndDateTime > startTime)
+                                {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
@@ -213,6 +324,50 @@ namespace HospitalKiosk.Data
                 connection.Open();
 
                 command.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// 특정 의사의 특정 월의 모든 일정을 삭제합니다.
+        /// </summary>
+        public int DeleteByDoctorAndMonth(int doctorId, int year, int month)
+        {
+            var startDate = new DateTime(year, month, 1);
+            var endDate = startDate.AddMonths(1).AddDays(-1).Date.AddHours(23).AddMinutes(59).AddSeconds(59);
+
+            var query = @"DELETE FROM DoctorSchedules
+                         WHERE DoctorId = @DoctorId
+                         AND (
+                             (IsRecurring = 0 AND StartDateTime >= @StartDate AND StartDateTime <= @EndDate)
+                             OR IsRecurring = 1
+                         )";
+
+            using (var connection = DatabaseHelper.GetConnection())
+            using (var command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@DoctorId", doctorId);
+                command.Parameters.AddWithValue("@StartDate", startDate);
+                command.Parameters.AddWithValue("@EndDate", endDate);
+                connection.Open();
+
+                return command.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// 특정 의사의 모든 일정을 삭제합니다.
+        /// </summary>
+        public int DeleteAllByDoctor(int doctorId)
+        {
+            var query = "DELETE FROM DoctorSchedules WHERE DoctorId = @DoctorId";
+
+            using (var connection = DatabaseHelper.GetConnection())
+            using (var command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@DoctorId", doctorId);
+                connection.Open();
+
+                return command.ExecuteNonQuery();
             }
         }
 

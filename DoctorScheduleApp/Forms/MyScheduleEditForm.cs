@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using HospitalKiosk.Models;
@@ -75,6 +76,28 @@ namespace DoctorScheduleApp.Forms
                     break;
                 }
             }
+
+            // 반복 일정 설정
+            if (_schedule.IsRecurring)
+            {
+                chkRecurring.Checked = true;
+                var recurringDays = _schedule.GetRecurringDaysOfWeek();
+                foreach (var day in recurringDays)
+                {
+                    int dayIndex = (int)day;
+                    clbDaysOfWeek.SetItemChecked(dayIndex, true);
+                }
+            }
+        }
+
+        private void ChkRecurring_CheckedChanged(object sender, EventArgs e)
+        {
+            bool isRecurring = chkRecurring.Checked;
+            lblRecurringDays.Visible = isRecurring;
+            clbDaysOfWeek.Visible = isRecurring;
+
+            // 반복 일정일 때는 날짜 선택 비활성화
+            dtpDate.Enabled = !isRecurring;
         }
 
         private void BtnSave_Click(object sender, EventArgs e)
@@ -89,6 +112,29 @@ namespace DoctorScheduleApp.Forms
                     return;
                 }
 
+                // 반복 일정 검증
+                bool isRecurring = chkRecurring.Checked;
+                List<DayOfWeek> selectedDays = null;
+
+                if (isRecurring)
+                {
+                    selectedDays = new List<DayOfWeek>();
+                    for (int i = 0; i < clbDaysOfWeek.Items.Count; i++)
+                    {
+                        if (clbDaysOfWeek.GetItemChecked(i))
+                        {
+                            selectedDays.Add((DayOfWeek)i);
+                        }
+                    }
+
+                    if (selectedDays.Count == 0)
+                    {
+                        MessageBox.Show("반복 요일을 최소 1개 이상 선택하세요.", "입력 오류",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+
                 var selectedDate = dtpDate.Value.Date;
                 var startDateTime = selectedDate.Add(dtpStartTime.Value.TimeOfDay);
                 var endDateTime = selectedDate.Add(dtpEndTime.Value.TimeOfDay);
@@ -101,34 +147,56 @@ namespace DoctorScheduleApp.Forms
                 }
 
                 var selectedType = ((ComboBoxItem)cmbScheduleType.SelectedItem).Value;
-                var title = selectedType == "Available" ? "근무" : cmbScheduleType.Text;
+                var title = selectedType == "Available" ? "근무" :
+                           selectedType == "ClosedDay" ? "휴진" :
+                           cmbScheduleType.Text;
                 var description = txtNotes.Text.Trim();
+
+                // 일정 객체 생성 또는 수정
+                DoctorSchedule schedule;
+                if (_isEditMode)
+                {
+                    schedule = _schedule;
+                }
+                else
+                {
+                    schedule = new DoctorSchedule
+                    {
+                        DoctorId = _doctorId
+                    };
+                }
+
+                schedule.ScheduleType = selectedType;
+                schedule.StartDateTime = startDateTime;
+                schedule.EndDateTime = endDateTime;
+                schedule.Title = title;
+                schedule.Description = description;
+                schedule.IsRecurring = isRecurring;
+                schedule.RecurrencePattern = isRecurring ?
+                    DoctorSchedule.CreateWeeklyPattern(selectedDays) : null;
 
                 ScheduleResult result;
 
                 if (_isEditMode)
                 {
-                    // 수정
-                    result = _scheduleService.UpdateSchedule(
-                        _schedule.ScheduleId,
-                        selectedType,
-                        startDateTime,
-                        endDateTime,
-                        title,
-                        description
-                    );
+                    _scheduleRepo.Update(schedule);
+                    result = new ScheduleResult
+                    {
+                        Success = true,
+                        Message = "일정이 수정되었습니다.",
+                        Schedule = schedule
+                    };
                 }
                 else
                 {
-                    // 추가
-                    result = _scheduleService.CreateSchedule(
-                        _doctorId,
-                        selectedType,
-                        startDateTime,
-                        endDateTime,
-                        title,
-                        description
-                    );
+                    var scheduleId = _scheduleRepo.Insert(schedule);
+                    schedule.ScheduleId = scheduleId;
+                    result = new ScheduleResult
+                    {
+                        Success = true,
+                        Message = "일정이 등록되었습니다.",
+                        Schedule = schedule
+                    };
                 }
 
                 if (result.Success)

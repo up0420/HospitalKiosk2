@@ -52,18 +52,18 @@ namespace HospitalKiosk.Forms
             this.btnCancel = new System.Windows.Forms.Button();
             this.numericKeypad = new HospitalKiosk.Controls.NumericKeypadControl();
             this.SuspendLayout();
-            //
+            // 
             // lblTitle
-            //
+            // 
             this.lblTitle.Font = new System.Drawing.Font("맑은 고딕", 18F, System.Drawing.FontStyle.Bold);
             this.lblTitle.Location = new System.Drawing.Point(20, 20);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(860, 40);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "진료 예약";
-            //
+            // 
             // lblPatientSearch
-            //
+            // 
             this.lblPatientSearch.Font = new System.Drawing.Font("맑은 고딕", 11F);
             this.lblPatientSearch.Location = new System.Drawing.Point(20, 70);
             this.lblPatientSearch.Name = "lblPatientSearch";
@@ -71,9 +71,9 @@ namespace HospitalKiosk.Forms
             this.lblPatientSearch.TabIndex = 1;
             this.lblPatientSearch.Text = "환자 번호 / 이름:";
             this.lblPatientSearch.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
+            // 
             // txtPatientSearch
-            //
+            // 
             this.txtPatientSearch.Font = new System.Drawing.Font("맑은 고딕", 11F);
             this.txtPatientSearch.Location = new System.Drawing.Point(180, 70);
             this.txtPatientSearch.Name = "txtPatientSearch";
@@ -81,10 +81,10 @@ namespace HospitalKiosk.Forms
             this.txtPatientSearch.Size = new System.Drawing.Size(300, 27);
             this.txtPatientSearch.TabIndex = 2;
             this.txtPatientSearch.Enter += new System.EventHandler(this.TxtPatientSearch_Enter);
-            //
+            // 
             // btnSearchPatient
-            //
-            this.btnSearchPatient.BackColor = System.Drawing.Color.FromArgb(0, 122, 204);
+            // 
+            this.btnSearchPatient.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
             this.btnSearchPatient.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSearchPatient.Font = new System.Drawing.Font("맑은 고딕", 11F);
             this.btnSearchPatient.ForeColor = System.Drawing.Color.White;
@@ -95,9 +95,9 @@ namespace HospitalKiosk.Forms
             this.btnSearchPatient.Text = "검색";
             this.btnSearchPatient.UseVisualStyleBackColor = false;
             this.btnSearchPatient.Click += new System.EventHandler(this.BtnSearchPatient_Click);
-            //
+            // 
             // lblPatientInfo
-            //
+            // 
             this.lblPatientInfo.Font = new System.Drawing.Font("맑은 고딕", 10F);
             this.lblPatientInfo.ForeColor = System.Drawing.Color.Gray;
             this.lblPatientInfo.Location = new System.Drawing.Point(20, 110);
@@ -105,9 +105,9 @@ namespace HospitalKiosk.Forms
             this.lblPatientInfo.Size = new System.Drawing.Size(860, 30);
             this.lblPatientInfo.TabIndex = 4;
             this.lblPatientInfo.Text = "환자를 검색해주세요";
-            //
+            // 
             // lblDepartment
-            //
+            // 
             this.lblDepartment.Font = new System.Drawing.Font("맑은 고딕", 11F);
             this.lblDepartment.Location = new System.Drawing.Point(20, 160);
             this.lblDepartment.Name = "lblDepartment";
@@ -115,9 +115,9 @@ namespace HospitalKiosk.Forms
             this.lblDepartment.TabIndex = 5;
             this.lblDepartment.Text = "진료과:";
             this.lblDepartment.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
+            // 
             // cmbDepartment
-            //
+            // 
             this.cmbDepartment.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbDepartment.Font = new System.Drawing.Font("맑은 고딕", 11F);
             this.cmbDepartment.FormattingEnabled = true;
@@ -126,9 +126,9 @@ namespace HospitalKiosk.Forms
             this.cmbDepartment.Size = new System.Drawing.Size(400, 28);
             this.cmbDepartment.TabIndex = 6;
             this.cmbDepartment.SelectedIndexChanged += new System.EventHandler(this.CmbDepartment_SelectedIndexChanged);
-            //
+            // 
             // lblDoctor
-            //
+            // 
             this.lblDoctor.Font = new System.Drawing.Font("맑은 고딕", 11F);
             this.lblDoctor.Location = new System.Drawing.Point(20, 210);
             this.lblDoctor.Name = "lblDoctor";
@@ -136,9 +136,9 @@ namespace HospitalKiosk.Forms
             this.lblDoctor.TabIndex = 7;
             this.lblDoctor.Text = "담당 의사:";
             this.lblDoctor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
+            // 
             // cmbDoctor
-            //
+            // 
             this.cmbDoctor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbDoctor.Enabled = false;
             this.cmbDoctor.Font = new System.Drawing.Font("맑은 고딕", 11F);
@@ -148,9 +148,9 @@ namespace HospitalKiosk.Forms
             this.cmbDoctor.Size = new System.Drawing.Size(400, 28);
             this.cmbDoctor.TabIndex = 8;
             this.cmbDoctor.SelectedIndexChanged += new System.EventHandler(this.CmbDoctor_SelectedIndexChanged);
-            //
+            // 
             // lblAppointmentDate
-            //
+            // 
             this.lblAppointmentDate.Font = new System.Drawing.Font("맑은 고딕", 11F);
             this.lblAppointmentDate.Location = new System.Drawing.Point(20, 260);
             this.lblAppointmentDate.Name = "lblAppointmentDate";
@@ -158,9 +158,9 @@ namespace HospitalKiosk.Forms
             this.lblAppointmentDate.TabIndex = 9;
             this.lblAppointmentDate.Text = "예약 날짜:";
             this.lblAppointmentDate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
+            // 
             // dtpAppointmentDate
-            //
+            // 
             this.dtpAppointmentDate.Font = new System.Drawing.Font("맑은 고딕", 11F);
             this.dtpAppointmentDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpAppointmentDate.Location = new System.Drawing.Point(180, 260);
@@ -168,9 +168,9 @@ namespace HospitalKiosk.Forms
             this.dtpAppointmentDate.Size = new System.Drawing.Size(400, 27);
             this.dtpAppointmentDate.TabIndex = 10;
             this.dtpAppointmentDate.ValueChanged += new System.EventHandler(this.DtpAppointmentDate_ValueChanged);
-            //
+            // 
             // lblTimeSlots
-            //
+            // 
             this.lblTimeSlots.Font = new System.Drawing.Font("맑은 고딕", 11F);
             this.lblTimeSlots.Location = new System.Drawing.Point(20, 310);
             this.lblTimeSlots.Name = "lblTimeSlots";
@@ -178,18 +178,18 @@ namespace HospitalKiosk.Forms
             this.lblTimeSlots.TabIndex = 11;
             this.lblTimeSlots.Text = "예약 시간:";
             this.lblTimeSlots.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
+            // 
             // pnlTimeSlots
-            //
+            // 
             this.pnlTimeSlots.AutoScroll = true;
             this.pnlTimeSlots.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlTimeSlots.Location = new System.Drawing.Point(180, 310);
             this.pnlTimeSlots.Name = "pnlTimeSlots";
             this.pnlTimeSlots.Size = new System.Drawing.Size(640, 150);
             this.pnlTimeSlots.TabIndex = 12;
-            //
+            // 
             // lblReason
-            //
+            // 
             this.lblReason.Font = new System.Drawing.Font("맑은 고딕", 11F);
             this.lblReason.Location = new System.Drawing.Point(20, 470);
             this.lblReason.Name = "lblReason";
@@ -197,19 +197,19 @@ namespace HospitalKiosk.Forms
             this.lblReason.TabIndex = 13;
             this.lblReason.Text = "진료 사유:";
             this.lblReason.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
+            // 
             // txtReason
-            //
+            // 
             this.txtReason.Font = new System.Drawing.Font("맑은 고딕", 11F);
             this.txtReason.Location = new System.Drawing.Point(180, 470);
             this.txtReason.Multiline = true;
             this.txtReason.Name = "txtReason";
             this.txtReason.Size = new System.Drawing.Size(640, 60);
             this.txtReason.TabIndex = 14;
-            //
+            // 
             // btnConfirm
-            //
-            this.btnConfirm.BackColor = System.Drawing.Color.FromArgb(0, 122, 204);
+            // 
+            this.btnConfirm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
             this.btnConfirm.Enabled = false;
             this.btnConfirm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnConfirm.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold);
@@ -221,9 +221,9 @@ namespace HospitalKiosk.Forms
             this.btnConfirm.Text = "예약 확인";
             this.btnConfirm.UseVisualStyleBackColor = false;
             this.btnConfirm.Click += new System.EventHandler(this.BtnConfirm_Click);
-            //
+            // 
             // btnCancel
-            //
+            // 
             this.btnCancel.BackColor = System.Drawing.Color.Gray;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancel.Font = new System.Drawing.Font("맑은 고딕", 12F);
@@ -235,18 +235,18 @@ namespace HospitalKiosk.Forms
             this.btnCancel.Text = "취소";
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
-            //
+            // 
             // numericKeypad
-            //
+            // 
             this.numericKeypad.BackColor = System.Drawing.Color.LightGray;
             this.numericKeypad.Location = new System.Drawing.Point(900, 80);
             this.numericKeypad.Name = "numericKeypad";
-            this.numericKeypad.Size = new System.Drawing.Size(324, 440);
+            this.numericKeypad.Size = new System.Drawing.Size(255, 260);
             this.numericKeypad.TabIndex = 17;
             this.numericKeypad.TargetTextBox = null;
-            //
+            // 
             // AppointmentForm
-            //
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1280, 900);
@@ -275,6 +275,7 @@ namespace HospitalKiosk.Forms
             this.Text = "진료 예약";
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
     }
 }
